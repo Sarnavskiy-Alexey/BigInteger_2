@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "xstring": "cpp",
+        "string": "cpp",
+        "iosfwd": "cpp",
+        "ostream": "cpp",
+        "*.tcc": "cpp",
+        "iomanip": "cpp",
+        "iostream": "cpp",
+        "system_error": "cpp",
+        "xutility": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
+    }
+}

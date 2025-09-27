@@ -1,0 +1,128 @@
+#include "BigInteger.h"
+#include <algorithm>
+
+namespace BigInteger {
+    BigInteger BigInteger::plus(const BigInteger &other) {
+        T_NUMBER result;
+
+        this->plus_vectors(this->m_number, other.m_number, result);
+        
+        return BigInteger(result);
+    }
+
+    void BigInteger::plus_vectors(const T_NUMBER &a, const T_NUMBER &b, T_NUMBER &result)
+    {
+        auto a_iter = a.end();
+        auto b_iter = b.end();
+        auto last_a_iter = a_iter;
+        auto last_b_iter = b_iter;
+        T_PLUSED plused = { 0, 0 };
+        T_ADDABLE last_addable = 0;
+        T_DIGIT first_digit = '0';
+        T_DIGIT second_digit = '0';
+
+        result.clear();
+
+        while (last_a_iter != a.begin() || last_b_iter != b.begin()) {
+            if (last_a_iter != a.begin()) a_iter--;
+            if (last_b_iter != b.begin()) b_iter--;
+
+            if (last_a_iter != a.begin() && last_b_iter != b.begin()) {
+                first_digit = *a_iter;
+                second_digit = *b_iter;
+            } else if (last_a_iter != a.begin()) {
+                first_digit = *a_iter;
+                second_digit = '0';
+            } else {
+                first_digit = '0'; 
+                second_digit = *b_iter;
+            }
+            
+            this->plus_digit(first_digit + last_addable, second_digit, plused);
+            result.emplace(result.begin(), plused.first);
+            
+            last_addable = plused.second;
+            last_a_iter = a_iter;
+            last_b_iter = b_iter;
+        }
+
+        if (last_addable) {
+            result.emplace(result.begin(), last_addable + 0x30);
+        }
+    }
+
+    void BigInteger::plus_digit(T_DIGIT a, T_DIGIT b, T_PLUSED &result) const
+    {
+        result.first = a + b - 0x30;
+        if (result.first > '9') {
+            result.first -= 0xa;
+            result.second = 1;
+        } else {
+            result.second = 0;
+        }
+    }
+
+    BigInteger BigInteger::operator+(const BigInteger &other)
+    {
+        return this->plus(other);
+    }
+
+    void BigInteger::mult_digit(T_DIGIT a, T_DIGIT b, T_PLUSED &result) const
+    {
+        result.first = (a - 0x30) * (b - 0x30);
+        result.second = result.first / 10;
+        result.first -= result.second * 10;
+        result.first += 0x30;
+    }
+
+    void BigInteger::mult_line(const T_NUMBER &a, T_DIGIT b, T_MULTED &result) const
+    {
+        T_PLUSED plused = { 0, 0 };
+        T_PLUSED digit_plused = { 0, 0 };
+        auto a_iter = a.end();
+        T_ADDABLE last_addable = 0;
+        result.first.clear();
+
+        do {
+            a_iter--;
+            this->mult_digit(*a_iter, b, plused);
+            this->plus_digit(plused.first, '0' + last_addable, digit_plused);
+            result.first.emplace(result.first.begin(), digit_plused.first);
+            last_addable = plused.second + digit_plused.second;
+        } while (a_iter != a.begin());
+
+        if (last_addable) {
+            result.first.emplace(result.first.begin(), last_addable + 0x30);
+        }
+    }
+
+    BigInteger BigInteger::mult(const BigInteger &other)
+    {
+        BigInteger result;
+        T_MULTED mult_result = { T_NUMBER{'0'}, 0 };
+        T_MULTED last_mult_result;
+        auto other_iter = other.m_number.end();
+        size_t counter = 0;
+
+        do {
+            other_iter--;
+            last_mult_result.first = result.m_number;
+            last_mult_result.second = mult_result.second;
+
+            this->mult_line(this->m_number, *other_iter, mult_result);
+            for (size_t i = 0; i < counter; i++) {
+                mult_result.first.emplace_back('0');
+            }
+
+            this->plus_vectors(mult_result.first, last_mult_result.first, result.m_number);
+            ++counter;
+        } while (other_iter != other.m_number.begin());
+
+        return result;
+    }
+
+    BigInteger BigInteger::operator*(const BigInteger &other)
+    {
+        return this->mult(other);
+    }
+} // namespace BigInteger
