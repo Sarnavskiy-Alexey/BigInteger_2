@@ -140,6 +140,7 @@ namespace BigInteger {
         }
         
         this->minus_vectors(reducable, subtracted, difference);
+        this->normalize_number(difference);
 
         return BigInteger{ difference, sign };
     }
@@ -190,12 +191,17 @@ namespace BigInteger {
         }
     }
 
-    BigInteger BigInteger::operator-(const BigInteger &other)
-    {
+    BigInteger BigInteger::operator-(const BigInteger &other) {
         if (this->sign == other.sign) {
             return this->minus(other);
         } else {
             return *this + (-other);
+        }
+    }
+
+    void BigInteger::normalize_number(T_NUMBER &a) {
+        while (a.size() > 1 && a[0] == '0') {
+            a.erase(a.begin());
         }
     }
 } // namespace BigInteger

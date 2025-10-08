@@ -26,6 +26,8 @@ namespace BigInteger {
             BigInteger minus(const BigInteger &other);
             void minus_vectors(const T_NUMBER &a, const T_NUMBER &b, T_NUMBER &result);
             void minus_digit(T_DIGIT a, T_DIGIT b, T_MINUSED &result) const;
+
+            void normalize_number(T_NUMBER &a);
         public:
             BigInteger() = default;
             BigInteger(int number);

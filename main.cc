@@ -17,6 +17,14 @@ int main() {
     e.print();
     std::cout << std::endl;
 
+    e = c * a;
+    e.print();
+    std::cout << std::endl;
+
+    d = d - BigInteger::BigInteger(1000000);
+    d.print();
+    std::cout << std::endl;
+
     std::cout << std::endl;
     std::cout << (a == b);
     std::cout << (a < b);
