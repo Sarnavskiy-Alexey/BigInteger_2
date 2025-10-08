@@ -116,7 +116,7 @@ namespace BigInteger {
             ++counter;
         } while (other_iter != other.m_number.begin());
 
-        return BigInteger{ result_number, this->sign ^ other.sign };
+        return BigInteger{ result_number, this->sign != other.sign };
     }
 
     BigInteger BigInteger::operator*(const BigInteger &other) {
