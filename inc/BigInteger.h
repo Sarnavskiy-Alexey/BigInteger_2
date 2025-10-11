@@ -29,6 +29,7 @@ namespace BigInteger {
             void minus_vectors(const T_NUMBER &a, const T_NUMBER &b, T_NUMBER &result) const;
             void minus_digit(T_DIGIT a, T_DIGIT b, T_MINUSED &result) const;
             BigInteger div(const BigInteger &divisor) const;
+            BigInteger remainder_div(const BigInteger &divisor) const;
 
             void normalize_number(T_NUMBER &a) const;
         public:
@@ -41,9 +42,13 @@ namespace BigInteger {
             BigInteger operator*(const BigInteger &other) const;
             BigInteger operator-(const BigInteger &other) const;
             BigInteger operator/(const BigInteger &other) const;
+            BigInteger operator%(const BigInteger &other) const;
 
             BigInteger& operator+=(const BigInteger &other);
+            BigInteger& operator*=(const BigInteger &other);
             BigInteger& operator-=(const BigInteger &other);
+            BigInteger& operator/=(const BigInteger &other);
+            BigInteger& operator%=(const BigInteger &other);
 
             bool operator<(const BigInteger &other) const;
             bool operator>=(const BigInteger &other) const;
@@ -51,6 +56,8 @@ namespace BigInteger {
             bool operator<=(const BigInteger &other) const;
             bool operator==(const BigInteger &other) const;
             bool operator!=(const BigInteger &other) const;
+
+            BigInteger modulo(const BigInteger &other) const;
 
             BigInteger operator-() const;
 

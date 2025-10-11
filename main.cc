@@ -12,11 +12,13 @@ int main() {
         std::cout << (a - b).print() << std::endl;
         std::cout << (a * b).print() << std::endl;
         std::cout << (a / b).print() << std::endl;
+        std::cout << (a % b).print() << std::endl;
+        std::cout << a.modulo(b).print() << std::endl;
         std::cout << (a -= b).print() << std::endl;
     }
     
     {
-        BigInteger::BigInteger a{21};
+        BigInteger::BigInteger a{-21};
         BigInteger::BigInteger b{12};
         
         std::cout << (a + b).print() << std::endl;
@@ -24,7 +26,8 @@ int main() {
         std::cout << a.print() << std::endl;
         std::cout << (a - b).print() << std::endl;
         std::cout << (a * b).print() << std::endl;
-        std::cout << (a / b).print() << std::endl;
+        std::cout << (a % b).print() << std::endl;
+        std::cout << a.modulo(b).print() << std::endl;
         std::cout << (a -= b).print() << std::endl;
     }
 

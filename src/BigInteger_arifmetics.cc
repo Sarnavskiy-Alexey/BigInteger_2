@@ -121,11 +121,18 @@ namespace BigInteger {
             ++counter;
         } while (other_iter != other.m_number.begin());
 
+        this->normalize_number(result_number);
+
         return BigInteger{ result_number, this->sign != other.sign };
     }
 
     BigInteger BigInteger::operator*(const BigInteger &other) const {
         return this->mult(other);
+    }
+
+    BigInteger& BigInteger::operator*=(const BigInteger &other){
+        *this = *this * other;
+        return *this;
     }
 
     BigInteger BigInteger::minus(const BigInteger &other) const {
@@ -234,6 +241,30 @@ namespace BigInteger {
     
     BigInteger BigInteger::operator/(const BigInteger &other) const {
         return this->div(other);
+    }
+
+    BigInteger& BigInteger::operator/=(const BigInteger &other){
+        *this = *this / other;
+        return *this;
+    }
+
+    BigInteger BigInteger::remainder_div(const BigInteger &divisor) const {
+        return *this - (*this / divisor) * divisor;
+    }
+    
+    BigInteger BigInteger::operator%(const BigInteger &other) const {
+        return this->remainder_div(other);
+    }
+
+    BigInteger& BigInteger::operator%=(const BigInteger &other){
+        *this = *this % other;
+        return *this;
+    }
+
+    BigInteger BigInteger::modulo(const BigInteger &other) const {
+        BigInteger result = *this % other;
+        if (result < 0) result += BigInteger{other};
+        return result;
     }
 
     void BigInteger::normalize_number(T_NUMBER &a) const {
