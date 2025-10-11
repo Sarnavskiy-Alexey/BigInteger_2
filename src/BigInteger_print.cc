@@ -4,10 +4,13 @@
 
 namespace BigInteger
 {
-    void BigInteger::print() const {
-        if (this->sign) std::cout << '-';
+    std::string BigInteger::print() const {
+        std::string result;
+        if (this->sign) result += '-';
         for (auto n : this->m_number) {
-            std::cout << n;
+            result += n;
         }
+        
+        return result;
     }
 } // namespace BigInteger

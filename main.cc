@@ -2,33 +2,31 @@
 #include <iostream>
 
 int main() {
-    BigInteger::BigInteger a = BigInteger::BigInteger(89645213);
-    BigInteger::BigInteger b = BigInteger::BigInteger(78956423);
+    {
+        BigInteger::BigInteger a{12};
+        BigInteger::BigInteger b{12};
 
-    BigInteger::BigInteger c = a * b;
-    c.print();
-    std::cout << std::endl;
+        std::cout << (a + b).print() << std::endl;
+        a += b;
+        std::cout << a.print() << std::endl;
+        std::cout << (a - b).print() << std::endl;
+        std::cout << (a * b).print() << std::endl;
+        std::cout << (a / b).print() << std::endl;
+        std::cout << (a -= b).print() << std::endl;
+    }
     
-    BigInteger::BigInteger d = a - b;
-    d.print();
-    std::cout << std::endl;
-    
-    BigInteger::BigInteger e = b - a;
-    e.print();
-    std::cout << std::endl;
-
-    e = c * a;
-    e.print();
-    std::cout << std::endl;
-
-    d = d - BigInteger::BigInteger(1000000);
-    d.print();
-    std::cout << std::endl;
-
-    std::cout << std::endl;
-    std::cout << (a == b);
-    std::cout << (a < b);
-    std::cout << (a > b);
+    {
+        BigInteger::BigInteger a{21};
+        BigInteger::BigInteger b{12};
+        
+        std::cout << (a + b).print() << std::endl;
+        a += b;
+        std::cout << a.print() << std::endl;
+        std::cout << (a - b).print() << std::endl;
+        std::cout << (a * b).print() << std::endl;
+        std::cout << (a / b).print() << std::endl;
+        std::cout << (a -= b).print() << std::endl;
+    }
 
     return 0;
 }

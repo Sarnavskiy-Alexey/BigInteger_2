@@ -2,7 +2,7 @@
 #include <algorithm>
 
 namespace BigInteger {
-    BigInteger BigInteger::plus(const BigInteger &other) {
+    BigInteger BigInteger::plus(const BigInteger &other) const {
         T_NUMBER result;
 
         this->plus_vectors(this->m_number, other.m_number, result);
@@ -10,7 +10,7 @@ namespace BigInteger {
         return BigInteger{ result, this->sign };
     }
 
-    void BigInteger::plus_vectors(const T_NUMBER &a, const T_NUMBER &b, T_NUMBER &result) {
+    void BigInteger::plus_vectors(const T_NUMBER &a, const T_NUMBER &b, T_NUMBER &result) const {
         auto a_iter = a.end();
         auto b_iter = b.end();
         auto last_a_iter = a_iter;
@@ -60,12 +60,17 @@ namespace BigInteger {
         }
     }
 
-    BigInteger BigInteger::operator+(const BigInteger &other) {
+    BigInteger BigInteger::operator+(const BigInteger &other) const {
         if (this->sign == other.sign) {
             return this->plus(other);
         } else {
             return *this - (-other);
         }
+    }
+
+    BigInteger& BigInteger::operator+=(const BigInteger &other){
+        *this = *this + other;
+        return *this;
     }
 
     void BigInteger::mult_digit(T_DIGIT a, T_DIGIT b, T_PLUSED &result) const {
@@ -95,7 +100,7 @@ namespace BigInteger {
         }
     }
 
-    BigInteger BigInteger::mult(const BigInteger &other) {
+    BigInteger BigInteger::mult(const BigInteger &other) const {
         T_NUMBER result_number;
         T_MULTED mult_result = { T_NUMBER{'0'}, 0 };
         T_MULTED last_mult_result;
@@ -119,11 +124,11 @@ namespace BigInteger {
         return BigInteger{ result_number, this->sign != other.sign };
     }
 
-    BigInteger BigInteger::operator*(const BigInteger &other) {
+    BigInteger BigInteger::operator*(const BigInteger &other) const {
         return this->mult(other);
     }
 
-    BigInteger BigInteger::minus(const BigInteger &other) {
+    BigInteger BigInteger::minus(const BigInteger &other) const {
         T_NUMBER reducable;
         T_NUMBER subtracted;
         T_NUMBER difference;
@@ -145,7 +150,7 @@ namespace BigInteger {
         return BigInteger{ difference, sign };
     }
 
-    void BigInteger::minus_vectors(const T_NUMBER &a, const T_NUMBER &b, T_NUMBER &result) {
+    void BigInteger::minus_vectors(const T_NUMBER &a, const T_NUMBER &b, T_NUMBER &result) const {
         auto a_iter = a.end();
         auto b_iter = b.end();
         auto last_a_iter = a_iter;
@@ -191,7 +196,7 @@ namespace BigInteger {
         }
     }
 
-    BigInteger BigInteger::operator-(const BigInteger &other) {
+    BigInteger BigInteger::operator-(const BigInteger &other) const {
         if (this->sign == other.sign) {
             return this->minus(other);
         } else {
@@ -199,7 +204,39 @@ namespace BigInteger {
         }
     }
 
-    void BigInteger::normalize_number(T_NUMBER &a) {
+    BigInteger& BigInteger::operator-=(const BigInteger &other){
+        *this = (*this) - (other);
+        return *this;
+    }
+
+    BigInteger BigInteger::div(const BigInteger &divisor) const {
+        bool sign = this->sign != divisor.sign;
+        auto this_iter = this->m_number.begin();
+        BigInteger divisable{0};
+        T_NUMBER quotient;
+        T_DIGIT quotient_digit = 0;
+
+        while (this_iter < this->m_number.end()) {
+            divisable.m_number.emplace_back(*this_iter);
+            while ((divisor * (quotient_digit + 1)) <= divisable) {
+                quotient_digit++;
+            }
+
+            quotient.emplace_back(quotient_digit + 0x30);
+            divisable -= (divisor * quotient_digit);
+
+            this_iter++;
+        }
+
+        this->normalize_number(quotient);
+        return BigInteger{ quotient, sign };
+    }
+    
+    BigInteger BigInteger::operator/(const BigInteger &other) const {
+        return this->div(other);
+    }
+
+    void BigInteger::normalize_number(T_NUMBER &a) const {
         while (a.size() > 1 && a[0] == '0') {
             a.erase(a.begin());
         }
