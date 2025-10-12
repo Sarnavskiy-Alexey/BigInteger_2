@@ -68,6 +68,11 @@ namespace BigInteger {
         }
     }
 
+    template <typename T>
+    BigInteger BigInteger::operator+(const T &number) const {
+        return *this + BigInteger{number};
+    }
+
     BigInteger& BigInteger::operator+=(const BigInteger &other){
         *this = *this + other;
         return *this;
@@ -128,6 +133,11 @@ namespace BigInteger {
 
     BigInteger BigInteger::operator*(const BigInteger &other) const {
         return this->mult(other);
+    }
+
+    template <typename T>
+    BigInteger BigInteger::operator*(const T &number) const {
+        return *this * BigInteger{number};
     }
 
     BigInteger& BigInteger::operator*=(const BigInteger &other){
@@ -211,6 +221,11 @@ namespace BigInteger {
         }
     }
 
+    template <typename T>
+    BigInteger BigInteger::operator-(const T &number) const {
+        return *this - BigInteger{number};
+    }
+
     BigInteger& BigInteger::operator-=(const BigInteger &other){
         *this = (*this) - (other);
         return *this;
@@ -243,6 +258,11 @@ namespace BigInteger {
         return this->div(other);
     }
 
+    template <typename T>
+    BigInteger BigInteger::operator/(const T &number) const {
+        return *this / BigInteger{number};
+    }
+
     BigInteger& BigInteger::operator/=(const BigInteger &other){
         *this = *this / other;
         return *this;
@@ -254,6 +274,11 @@ namespace BigInteger {
     
     BigInteger BigInteger::operator%(const BigInteger &other) const {
         return this->remainder_div(other);
+    }
+
+    template <typename T>
+    BigInteger BigInteger::operator%(const T &number) const {
+        return *this % BigInteger{number};
     }
 
     BigInteger& BigInteger::operator%=(const BigInteger &other){
@@ -272,4 +297,60 @@ namespace BigInteger {
             a.erase(a.begin());
         }
     }
+
+    template BigInteger BigInteger::operator+<bool>(const bool &number) const;
+    template BigInteger BigInteger::operator+<char>(const char &number) const;
+    template BigInteger BigInteger::operator+<short>(const short &number) const;
+    template BigInteger BigInteger::operator+<int>(const int &number) const;
+    template BigInteger BigInteger::operator+<long>(const long &number) const;
+    template BigInteger BigInteger::operator+<long long>(const long long &number) const;
+    template BigInteger BigInteger::operator+<unsigned char>(const unsigned char &number) const;
+    template BigInteger BigInteger::operator+<unsigned short>(const unsigned short &number) const;
+    template BigInteger BigInteger::operator+<unsigned int>(const unsigned int &number) const;
+    template BigInteger BigInteger::operator+<unsigned long>(const unsigned long &number) const;
+    template BigInteger BigInteger::operator+<unsigned long long>(const unsigned long long &number) const;
+    template BigInteger BigInteger::operator*<bool>(const bool &number) const;
+    template BigInteger BigInteger::operator*<char>(const char &number) const;
+    template BigInteger BigInteger::operator*<short>(const short &number) const;
+    template BigInteger BigInteger::operator*<int>(const int &number) const;
+    template BigInteger BigInteger::operator*<long>(const long &number) const;
+    template BigInteger BigInteger::operator*<long long>(const long long &number) const;
+    template BigInteger BigInteger::operator*<unsigned char>(const unsigned char &number) const;
+    template BigInteger BigInteger::operator*<unsigned short>(const unsigned short &number) const;
+    template BigInteger BigInteger::operator*<unsigned int>(const unsigned int &number) const;
+    template BigInteger BigInteger::operator*<unsigned long>(const unsigned long &number) const;
+    template BigInteger BigInteger::operator*<unsigned long long>(const unsigned long long &number) const;
+    template BigInteger BigInteger::operator-<bool>(const bool &number) const;
+    template BigInteger BigInteger::operator-<char>(const char &number) const;
+    template BigInteger BigInteger::operator-<short>(const short &number) const;
+    template BigInteger BigInteger::operator-<int>(const int &number) const;
+    template BigInteger BigInteger::operator-<long>(const long &number) const;
+    template BigInteger BigInteger::operator-<long long>(const long long &number) const;
+    template BigInteger BigInteger::operator-<unsigned char>(const unsigned char &number) const;
+    template BigInteger BigInteger::operator-<unsigned short>(const unsigned short &number) const;
+    template BigInteger BigInteger::operator-<unsigned int>(const unsigned int &number) const;
+    template BigInteger BigInteger::operator-<unsigned long>(const unsigned long &number) const;
+    template BigInteger BigInteger::operator-<unsigned long long>(const unsigned long long &number) const;
+    template BigInteger BigInteger::operator/<bool>(const bool &number) const;
+    template BigInteger BigInteger::operator/<char>(const char &number) const;
+    template BigInteger BigInteger::operator/<short>(const short &number) const;
+    template BigInteger BigInteger::operator/<int>(const int &number) const;
+    template BigInteger BigInteger::operator/<long>(const long &number) const;
+    template BigInteger BigInteger::operator/<long long>(const long long &number) const;
+    template BigInteger BigInteger::operator/<unsigned char>(const unsigned char &number) const;
+    template BigInteger BigInteger::operator/<unsigned short>(const unsigned short &number) const;
+    template BigInteger BigInteger::operator/<unsigned int>(const unsigned int &number) const;
+    template BigInteger BigInteger::operator/<unsigned long>(const unsigned long &number) const;
+    template BigInteger BigInteger::operator/<unsigned long long>(const unsigned long long &number) const;
+    template BigInteger BigInteger::operator%<bool>(const bool &number) const;
+    template BigInteger BigInteger::operator%<char>(const char &number) const;
+    template BigInteger BigInteger::operator%<short>(const short &number) const;
+    template BigInteger BigInteger::operator%<int>(const int &number) const;
+    template BigInteger BigInteger::operator%<long>(const long &number) const;
+    template BigInteger BigInteger::operator%<long long>(const long long &number) const;
+    template BigInteger BigInteger::operator%<unsigned char>(const unsigned char &number) const;
+    template BigInteger BigInteger::operator%<unsigned short>(const unsigned short &number) const;
+    template BigInteger BigInteger::operator%<unsigned int>(const unsigned int &number) const;
+    template BigInteger BigInteger::operator%<unsigned long>(const unsigned long &number) const;
+    template BigInteger BigInteger::operator%<unsigned long long>(const unsigned long long &number) const;
 } // namespace BigInteger

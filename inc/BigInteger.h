@@ -34,15 +34,47 @@ namespace BigInteger {
             void normalize_number(T_NUMBER &a) const;
         public:
             BigInteger() = default;
+            BigInteger(bool number);
+            BigInteger(char number);
+            BigInteger(short number);
             BigInteger(int number);
+            BigInteger(long number);
+            BigInteger(long long number);
+            BigInteger(unsigned char number);
+            BigInteger(unsigned short number);
+            BigInteger(unsigned int number);
+            BigInteger(unsigned long number);
+            BigInteger(unsigned long long number);
             BigInteger(T_NUMBER number, const bool sign = false);
             BigInteger(const BigInteger &other);
+            BigInteger(const std::string &string_number);
+            BigInteger(const char *number);
 
             BigInteger operator+(const BigInteger &other) const;
             BigInteger operator*(const BigInteger &other) const;
             BigInteger operator-(const BigInteger &other) const;
             BigInteger operator/(const BigInteger &other) const;
             BigInteger operator%(const BigInteger &other) const;
+            template <typename T>
+            BigInteger operator+(const T &number) const;
+            template <typename T>
+            BigInteger operator*(const T &number) const;
+            template <typename T>
+            BigInteger operator-(const T &number) const;
+            template <typename T>
+            BigInteger operator/(const T &number) const;
+            template <typename T>
+            BigInteger operator%(const T &number) const;
+            template <typename T>
+            friend BigInteger operator+(const T &number, const BigInteger &other);
+            template <typename T>
+            friend BigInteger operator*(const T &number, const BigInteger &other);
+            template <typename T>
+            friend BigInteger operator-(const T &number, const BigInteger &other);
+            template <typename T>
+            friend BigInteger operator/(const T &number, const BigInteger &other);
+            template <typename T>
+            friend BigInteger operator%(const T &number, const BigInteger &other);
 
             BigInteger& operator+=(const BigInteger &other);
             BigInteger& operator*=(const BigInteger &other);
@@ -63,4 +95,29 @@ namespace BigInteger {
 
             std::string print() const;
     };
+
+    template <typename T>
+    BigInteger operator+(const T &number, const BigInteger &other) {
+        return BigInteger{number} + other;
+    }
+    
+    template <typename T>
+    BigInteger operator*(const T &number, const BigInteger &other) {
+        return BigInteger{number} * other;
+    }
+    
+    template <typename T>
+    BigInteger operator-(const T &number, const BigInteger &other) {
+        return BigInteger{number} - other;
+    }
+    
+    template <typename T>
+    BigInteger operator/(const T &number, const BigInteger &other) {
+        return BigInteger{number} / other;
+    }
+    
+    template <typename T>
+    BigInteger operator%(const T &number, const BigInteger &other) {
+        return BigInteger{number} % other;
+    }
 } // namespace BigInteger
